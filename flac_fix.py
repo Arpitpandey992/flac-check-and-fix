@@ -42,18 +42,13 @@ fixCount = 0
 
 def checkFile(file_path):
     global badFiles, fixCount
-    # Check if the file is a FLAC file (based on its extension)
     try:
-        # Use subprocess to run the 'flac' command-line tool with the '--test' option
         result = subprocess.run(
             ['flac', '--test', file_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        # Check the return code of the 'flac' command
         if result.returncode != 0:
-            # The file failed the integrity test
             Print(f"==> Checksum Mismatch at {file_path} <==")
             badFiles += 1
             if fix:
-                # Try to fix the file using the 'flac' command-line tool with the '--fix' option
                 Print("Attempting to Fix...", end='')
                 fix_result = subprocess.run(['flac', '--verify', '--decode-through-errors', '--preserve-modtime',
                                             '-f', file_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -80,6 +75,7 @@ if recur:
                 checkFile(file_path)
 
 else:
+    # Iterate through the folder only
     for file in os.listdir(flac_dir):
         file_path = os.path.join(flac_dir, file)
         if file.endswith('.flac'):
