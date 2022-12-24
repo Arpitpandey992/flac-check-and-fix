@@ -19,9 +19,13 @@ options:
   if we want to scan the folder '~/Downloads/music` recursively : 
   
   `flac_dir "~/Downloads/music"`
+  
   This will list all corrupted files
+  
   Now, we can also try to fix these files by decoding->encoding again by giving `--fix` argument
+  
   `flac_dir --fix "~/Downloads/music"`
   
   And if we want to search all subfolders, give the -r argument as well
+  
   `flac_dir -r --fix "~/Downloads/music"`
