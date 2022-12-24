@@ -19,12 +19,6 @@ fix = args.fix
 quiet = args.quiet
 recur = args.recursive
 
-# flac_dir = "/home/arpit/Desktop"
-# fix = False
-# quiet = False
-# recur = False
-
-
 # Check if the directory exists
 if not os.path.exists(flac_dir):
     print(f"Error: directory '{flac_dir}' does not exist")
