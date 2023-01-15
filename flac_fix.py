@@ -37,7 +37,9 @@ fixCount = 0
 def checkFile(file_path):
     global badFiles, fixCount
     try:
-        print(f'Checking : {os.path.basename(file_path)}', end='\r')
+        sys.stdout.write("\033[K") # Clear to the end of line
+        print(f'Checking : {os.path.basename(file_path)}',
+              end='\r')
         result = subprocess.run(
             ['flac', '--test', file_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if result.returncode != 0:
