@@ -37,13 +37,13 @@ fixCount = 0
 def checkFile(file_path):
     global badFiles, fixCount
     try:
-        sys.stdout.write("\033[K") # Clear to the end of line
+        sys.stdout.write("\033[K")  # Clear to the end of line
         print(f'Checking : {os.path.basename(file_path)}',
               end='\r')
         result = subprocess.run(
             ['flac', '--test', file_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if result.returncode != 0:
-            Print(f"==> Checksum Mismatch at {file_path} <==")
+            Print(f"\n\n==> Checksum Mismatch at {file_path} <==\n")
             badFiles += 1
             if fix:
                 Print("Attempting to Fix...", end='')
@@ -53,10 +53,10 @@ def checkFile(file_path):
                 if fix_result.returncode == 0:
                     # The file was fixed
                     fixCount += 1
-                    Print(f"Fixed <<<======")
+                    Print(f"Fixed <<<======\n\n")
                 else:
                     # The file could not be fixed
-                    Print("Couldn't Fix XXXXXXX")
+                    Print("Couldn't Fix XXXXXXX\n\n")
                     Print(fix_result.stderr.decode())
     except Exception as e:
         # An exception was raised while running the 'flac' command
@@ -78,6 +78,7 @@ else:
         if file.endswith('.flac'):
             checkFile(file_path)
 
-print('Summary : ')
+sys.stdout.write("\033[K")  # Clear to the end of line
+print('\n\nSummary : ')
 print(f"Corrupted Files Count : {badFiles}")
 print(f"files Fixed : {fixCount}")
